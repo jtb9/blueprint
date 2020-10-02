@@ -77,6 +77,12 @@ export class AsyncControllableInput extends React.PureComponent<
     public render() {
         const { isComposing, externalValue, localValue } = this.state;
         const { inputRef, autoComplete, ...restProps } = this.props;
+
+        // If the user explicity sets autocomplete to "false" let's tell
+        // the browser not to use it.  But otherwise, act like the prop wasn't
+        // given.
+        const autocomplete = autoComplete === false ? 'off' : undefined;
+
         return (
             <input
                 {...restProps}
@@ -85,7 +91,7 @@ export class AsyncControllableInput extends React.PureComponent<
                 onCompositionStart={this.handleCompositionStart}
                 onCompositionEnd={this.handleCompositionEnd}
                 onChange={this.handleChange}
-                autoComplete={this.props.autoComplete}
+                autocomplete={autocomplete}
             />
         );
     }
