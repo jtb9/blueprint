@@ -20,6 +20,9 @@ import { polyfill } from "react-lifecycles-compat";
 export interface IAsyncControllableInputProps
     extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
     inputRef?: React.LegacyRef<HTMLInputElement>;
+
+    /** Whether this input should use autocomplete */
+    autoComplete?: boolean;
 }
 
 export interface IAsyncControllableInputState {
@@ -73,7 +76,7 @@ export class AsyncControllableInput extends React.PureComponent<
 
     public render() {
         const { isComposing, externalValue, localValue } = this.state;
-        const { inputRef, ...restProps } = this.props;
+        const { inputRef, autoComplete, ...restProps } = this.props;
         return (
             <input
                 {...restProps}
@@ -82,6 +85,7 @@ export class AsyncControllableInput extends React.PureComponent<
                 onCompositionStart={this.handleCompositionStart}
                 onCompositionEnd={this.handleCompositionEnd}
                 onChange={this.handleChange}
+                autoComplete={this.props.autoComplete}
             />
         );
     }

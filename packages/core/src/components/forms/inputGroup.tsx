@@ -68,6 +68,9 @@ export interface IInputGroupProps extends IControlledProps, IIntentProps, IProps
     /** Whether this input should use small styles. */
     small?: boolean;
 
+    /** Whether this input should use autocomplete */
+    autoComplete?: boolean;
+
     /** Placeholder text in the absence of any value. */
     placeholder?: string;
 
@@ -107,7 +110,7 @@ export class InputGroup extends AbstractPureComponent2<IInputGroupProps & HTMLIn
     };
 
     public render() {
-        const { className, disabled, fill, inputRef, intent, large, small, round } = this.props;
+        const { className, disabled, fill, inputRef, intent, large, small, round, autoComplete } = this.props;
         const classes = classNames(
             Classes.INPUT_GROUP,
             Classes.intentClass(intent),
@@ -127,6 +130,8 @@ export class InputGroup extends AbstractPureComponent2<IInputGroupProps & HTMLIn
             paddingRight: this.state.rightElementWidth,
         };
 
+        const isAutoCompleteOn = !(autoComplete === false);
+
         return (
             <div className={classes}>
                 {this.maybeRenderLeftElement()}
@@ -134,6 +139,7 @@ export class InputGroup extends AbstractPureComponent2<IInputGroupProps & HTMLIn
                     type="text"
                     {...removeNonHTMLProps(this.props)}
                     className={Classes.INPUT}
+                    autoComplete={isAutoCompleteOn}
                     inputRef={inputRef}
                     style={style}
                 />
